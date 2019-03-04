@@ -27,6 +27,18 @@ def home():
 def about():
     """Render the website's about page."""
     return render_template('about.html')
+    
+@app.route('/secure-page')
+@login_required
+def secure_page():
+    return render_template('secure-page.html')
+    
+@app.route('/logout')
+def logout():
+    logout_user()
+    flash('You have been successfully loged out!', 'primary')
+    return redirect(url_for("home.html"))
+        
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -47,18 +59,18 @@ def login():
             # Then store the result of that query to a `user` variable so it can be
             # passed to the login_user() method below.
             
-            user = UserProfile.query.filter_by(username=username, password=password)\.first()
+            user = UserProfile.query.filter_by(username=username, password=password).first()
             
-            check_password_hash(user.password, password):
+            check_password_hash(user.password, password)
 
             # get user id, load into session
             login_user(user)
             
 
             # remember to flash a message to the user
-            else:
+        else:
             flash('Username or Password is incorrect.', 'danger')
-            return redirect(url_for("home"))  # they should be redirected to a secure-page route instead
+            return redirect(url_for("secure-page.html"))  # they should be redirected to a secure-page route instead
     return render_template("login.html", form=form)
 
 
