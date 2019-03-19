@@ -30,6 +30,7 @@ def profiles():
 def profile():
     
     form = ProfileForm()
+    idd = len (UserProfile.query.all())
     if request.method == "POST" and form.validate_on_submit():
         name1= form.name1.data
         name2= form.name2.data
@@ -38,12 +39,21 @@ def profile():
         location= form.location.data
         biography= form.biography.data
         image= form.image.data
+        img_nm = name1 + name2 + str (idd +1)
         
         
         NewUser = UserProfile(name1=name1, name2=name2, gender=gender, email=email, location=location, biography=biography, image=image
             )
             
-        return render_template('profile.html', form=form)
+        db.session.add(newUser)
+        db.session.commit()
+        
+        image.save("app/static/profilepictures/" + imageName + ".png")
+        
+        flash("New User Profile Created", "success")
+        return redirect(url_for("profiles"))
+            
+    return render_template('profile.html', form=form)
 
 @app.route('/about/')
 def about():

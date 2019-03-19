@@ -29,7 +29,7 @@ class UserProfile(db.Model):
 
     def is_authenticated(self):
         return True
-stop fucking with me....
+
     def is_active(self):
         return True
         
@@ -43,4 +43,4 @@ stop fucking with me....
             return str(self.id)  # python 3 support
 
     def __repr__(self):
-        return '<User %r>' % (self.username)
+        return '<User %r>' % (self.name1)
