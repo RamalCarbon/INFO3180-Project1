@@ -1,0 +1,82 @@
+    <head>     
+        <meta charset="UTF-8"> 
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    </head> 
+{% extends "base.html" %}
+
+
+{%block main %}
+
+<h1>Add Profile</h1></br>
+
+
+<form method="POST" action="{{url_for('profile')}}">
+{{ form.csrf_token }}
+    
+    <div class="form_container">
+        <p class ="label">{{ form.name1.label }}</p>
+        {{ form.name1 }}
+        
+        <ul>
+        {% for error in form.name1.errors %}
+            <li class="error-messages" style="color:red;">{{ error }}</li>
+        {% endfor %}
+        </ul>
+        <br>
+        
+        <p class ="label">{{ form.name2.label }}</p>
+        {{ form.name2 }}
+        
+        <ul>
+        {% for error in form.name2.errors %}
+            <li class="error-messages" style="color:red;">{{ error }}</li>
+        {% endfor %}
+        </ul>
+        <br>
+        
+        <p class ="label">{{ form.gender.label }}</p>
+        {{ form.gender }}
+        
+        <ul>
+        {% for error in form.gender.errors %}
+            <li class="error-messages" style="color:red;">{{ error }}</li>
+        {% endfor %}
+        </ul>
+        <br>
+        
+        <p class ="label">{{ form.email.label }}</p>
+        {{ form.email }}
+        
+        <ul>
+        {% for error in form.email.errors %}
+            <li class="error-messages" style="color:red;">{{ error }}</li>
+        {% endfor %}
+        </ul>
+        <br>
+        
+        <p class ="label">{{ form.location.label }}</p>
+        {{ form.location }}
+        
+        <ul>
+        {% for error in form.location.errors %}
+            <li class="error-messages" style="color:red;">{{ error }}</li>
+        {% endfor %}
+        </ul>
+        <br>
+    
+        <p class ="label">{{ form.biography.label }}</p>
+        {{form.biography}}
+        
+        <ul>
+        {% for error in form.biography.errors %}
+            <li class="error-messages" style="color:red;">{{ error }}</li>
+        {% endfor %}
+        </ul>
+        
+        <button type="Submit">Browse</button></br></br>
+        
+        <button type="submit">Add profile</button>
+    </div>
+</form>
+
+{% endblock %}
