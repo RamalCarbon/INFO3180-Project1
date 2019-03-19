@@ -29,10 +29,10 @@ class UserProfile(db.Model):
 
     def is_authenticated(self):
         return True
-
+stop fucking with me....
     def is_active(self):
         return True
-
+        
     def is_anonymous(self):
         return False
 
