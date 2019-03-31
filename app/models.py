@@ -10,22 +10,25 @@ class UserProfile(db.Model):
     __tablename__ = 'user_profiles'
 
     id = db.Column(db.Integer, primary_key=True)
-    name1 = db.Column(db.String(80))
-    name2 = db.Column(db.String(80))
+    first_name = db.Column(db.String(80))
+    last_name = db.Column(db.String(80))
     gender = db.Column(db.String(80), unique=True)
     email = db.Column(db.String(255))
     location = db.Column(db.String(255))
     biography = db.Column(db.String(300))
     image = db.Column(db.String(255))
+    joined_on = db.Column(db.Date)
     
-    def __init__(self, name1, name2, gender, email, locaion, biography, image):
-        self.name1 = first_name
-        self.name2 = last_name
-        self.gender = username
+    def __init__(self, first_name, last_name, gender, email, location, biography, image, joined_on):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.gender = gender
         self.email = email
         self.location = location
         self.biography = biography
         self.image = image
+        self.joined_on = joined_on
+        
 
     def is_authenticated(self):
         return True

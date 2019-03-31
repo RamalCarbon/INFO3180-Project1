@@ -11,7 +11,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from app.forms import ProfileForm
 from app.models import UserProfile
 from werkzeug.security import check_password_hash
-
+from .data import get_date,format_date
 
 ###
 # Routing for your application.
@@ -22,38 +22,47 @@ def home():
     """Render website's home page."""
     return render_template('home.html')
 
-@app.route('/profiles') 
-def profiles():   
-    return render_template('profiles.html') 
+@app.route('/profiles')
+def profiles():
+    """Render the website's list of profiles"""
+    users = UserProfile.query.all()
+    return render_template("profiles.html",users = users)
     
 @app.route('/profile', methods=["GET","POST"])
 def profile():
     
     form = ProfileForm()
-    idd = len (UserProfile.query.all())
+    Id = len (UserProfile.query.all())
     if request.method == "POST" and form.validate_on_submit():
-        name1= form.name1.data
-        name2= form.name2.data
+        first_name= form.first_name.data
+        last_name= form.last_name.data
         gender= form.gender.data
         email= form.email.data
         location= form.location.data
         biography= form.biography.data
         image= form.image.data
-        img_nm = name1 + name2 + str (idd +1)
+        joined_on= form.joined_on.data
+        img_name = first_name + last_name + str (Id +1)
         
         
-        NewUser = UserProfile(name1=name1, name2=name2, gender=gender, email=email, location=location, biography=biography, image=image
+        NewUser = UserProfile(first_name=first_name, last_name=last_name, gender=gender, email=email, location=location, biography=biography, image=image, joined_on=joined_on
             )
             
-        db.session.add(newUser)
+        db.session.add(NewUser)
         db.session.commit()
         
-        image.save("app/static/profilepictures/" + imageName + ".png")
+        image.save("app/static/profilepictures/" + img_name + ".png")
         
         flash("New User Profile Created", "success")
         return redirect(url_for("profiles"))
             
     return render_template('profile.html', form=form)
+
+@app.route('/profile/<userid>')
+def userProfile(userid):
+   
+    user = UserProfile.query.filter_by(id = userid).first()
+    return render_template('userprofile.html',user = user,date = format_date(user.created_on))
 
 @app.route('/about/')
 def about():

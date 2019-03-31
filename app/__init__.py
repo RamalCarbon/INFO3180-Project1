@@ -3,7 +3,7 @@ from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = "change this to be a more random key"
+app.config['SECRET_KEY'] = "try guessing this"
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://project1:12345@localhost/project1"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True # added just to suppress a warning
 
